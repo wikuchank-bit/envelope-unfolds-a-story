@@ -32,7 +32,7 @@ export function LockScreen({ onUnlock }: { onUnlock?: () => void }) {
       setTimeout(() => {
         if (checkPasscode(next)) {
           setMode("open");
-          onUnlock?.();
+          setTimeout(() => onUnlock?.(), 1900);
         } else {
           setShake(true);
           setTimeout(() => { setShake(false); setCode(""); }, 500);
