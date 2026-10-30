@@ -111,18 +111,26 @@ function Index() {
     return () => window.removeEventListener("keydown", onKey);
   }, [zoom]);
 
+  // If the full song file isn't uploaded yet, fall back to Apple's legal preview.
+  useEffect(() => {
+    fetch("/song.mp3", { method: "HEAD" })
+      .then((r) => { if (!r.ok) setSongSrc(SONG_PREVIEW); })
+      .catch(() => setSongSrc(SONG_PREVIEW));
+  }, []);
+  useEffect(() => {
+    if (songSrc === SONG_PREVIEW && opened) {
+      const t = setTimeout(() => audio.current?.play().catch(() => {}), 100);
+      return () => clearTimeout(t);
+    }
+  }, [songSrc, opened]);
+
   const play = () => {
     const a = audio.current; if (!a) return;
     a.volume = 0.35;
     a.play().then(() => { setPlaying(true); setStarted(true); }).catch(() => setStarted(false));
   };
   const toggle = () => { const a = audio.current; if (!a) return; if (a.paused) play(); else { a.pause(); setPlaying(false); } };
-  // If the full song file isn't uploaded yet, fall back to Apple's legal preview.
-  const audioError = () => {
-    if (songSrc === SONG_PREVIEW) return;
-    setSongSrc(SONG_PREVIEW);
-    if (opened) setTimeout(() => audio.current?.play().catch(() => {}), 100);
-  };
+  const audioError = () => { if (songSrc !== SONG_PREVIEW) setSongSrc(SONG_PREVIEW); };
 
   const openEnvelope = () => {
     if (opened) return;
