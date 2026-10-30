@@ -2,20 +2,39 @@ import { useEffect, useRef, useState } from "react";
 
 const N = 300;
 
-// Surface of a puffy 3D heart: the classic 2D heart curve stacked along z in
-// rings that shrink toward the poles, giving the heart real volume and depth.
+// Surface of a volumetric 3D heart: two heart-shaped domes (front & back)
+// plus a rounded side rim, so it reads as a heart from the front and has
+// real depth from every other angle.
 function heartSurface(n: number) {
-  const rings = 13;
   const pts: [number, number, number][] = [];
-  for (let ri = 0; ri < rings; ri++) {
-    const z = -1 + (2 * (ri + 0.5)) / rings;
-    const s = Math.sqrt(Math.max(0.04, 1 - z * z));
-    const m = ri === rings - 1 ? n - pts.length : Math.max(4, Math.round((n * s) / 10.3));
-    for (let i = 0; i < m && pts.length < n; i++) {
-      const t = (i / m) * Math.PI * 2 + ri * 0.35;
-      const x = 16 * Math.sin(t) ** 3;
-      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-      pts.push([(x / 17) * s, (-y / 17) * s, z * 0.85]);
+  const curve = (t: number): [number, number] => {
+    const x = 16 * Math.sin(t) ** 3;
+    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+    return [x / 17, -y / 17 - 0.12];
+  };
+  const Z = 0.42; // half-thickness
+  // front & back heart-shaped domes (~60% of points)
+  const domeN = Math.round(n * 0.6);
+  const T = 26, R = 7;
+  for (let i = 0; i < T && pts.length < domeN; i++) {
+    for (let j = 0; j < R && pts.length < domeN; j++) {
+      const t = ((i + 0.5) / T) * Math.PI * 2;
+      const r = Math.sqrt((j + 0.5) / R);
+      const [x, y] = curve(t);
+      const z = Z * Math.sqrt(1 - r * r);
+      pts.push([x * r, y * r, z]);
+      if (pts.length < domeN) pts.push([x * r, y * r, -z]);
+    }
+  }
+  // rounded side rim (~40% of points)
+  const RT = 40, RZ = 5;
+  for (let i = 0; i < RT && pts.length < n; i++) {
+    for (let j = 0; j < RZ && pts.length < n; j++) {
+      const t = ((i + 0.5) / RT) * Math.PI * 2;
+      const [x, y] = curve(t);
+      const z = -Z + (2 * Z * (j + 0.5)) / RZ;
+      const inset = 1 - 0.12 * (z / Z) ** 2; // rounded edge, not a slab
+      pts.push([x * inset, y * inset, z]);
     }
   }
   return pts;
