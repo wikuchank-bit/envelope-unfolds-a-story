@@ -28,7 +28,7 @@ const SPOTS = Array.from({ length: 34 }).map((_, i) => {
   else if (side === 1) { x = along * 100; y = 100 - depth; }
   else if (side === 2) { x = depth; y = along * 100; }
   else { x = 100 - depth; y = along * 100; }
-  return { x, y, size: 60 + ((i * 41) % 90), c: COLORS[i % COLORS.length], petals: 5 + (i % 3), rot: t, delay: (i % 12) * 0.09 };
+  return { x, y, size: 60 + ((i * 41) % 90), c: COLORS[i % COLORS.length]!, petals: 5 + (i % 3), rot: t, delay: (i % 12) * 0.09 };
 });
 
 export function FloralLayer({ on }: { on: boolean }) {
@@ -40,7 +40,7 @@ export function FloralLayer({ on }: { on: boolean }) {
         </div>
       ))}
       {Array.from({ length: 22 }).map((_, i) => (
-        <span key={"p" + i} className="petal" style={{ left: `${(i * 47) % 100}%`, animationDelay: `${0.4 + (i % 11) * 0.8}s`, animationDuration: `${9 + (i % 5) * 2}s`, background: COLORS[i % COLORS.length][0] }} />
+        <span key={"p" + i} className="petal" style={{ left: `${(i * 47) % 100}%`, animationDelay: `${0.4 + (i % 11) * 0.8}s`, animationDuration: `${9 + (i % 5) * 2}s`, background: COLORS[i % COLORS.length]![0] }} />
       ))}
     </div>
   );

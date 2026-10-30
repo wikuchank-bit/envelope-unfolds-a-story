@@ -30,7 +30,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
     const hp = heartPoints(N);
     const parts = Array.from({ length: N }).map((_, i) => {
       const th = i * 0.115 + 0.6;
-      return { th, r: 6 + th * 4.6, hx: hp[i][0], hy: hp[i][1], delay: Math.random() * 0.6, size: 7 + Math.random() * 4, a: 0.55 + Math.random() * 0.45 };
+      return { th, r: 6 + th * 4.6, hx: hp[i]![0], hy: hp[i]![1], delay: Math.random() * 0.6, size: 7 + Math.random() * 4, a: 0.55 + Math.random() * 0.45 };
     });
     let raf = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
