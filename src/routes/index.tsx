@@ -59,7 +59,7 @@ function Index() {
       <section className={`screen ${screen === "letter" ? "active" : ""}`} id="s-letter" aria-hidden={screen !== "letter"}>
         <div className="letter-card">
           <div className="letter-inner">
-            <h2>My Dearest,</h2>
+            <h2>My Haris,</h2>
             <p>
               There are a thousand things I could write here, and somehow none of them
               feel big enough. So I'll start with the simplest one: I'm glad it's you.
