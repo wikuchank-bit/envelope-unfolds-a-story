@@ -19,6 +19,9 @@ describe("anniversary rules", () => {
   });
   it("conversation opens with Haris on the left, answered by me on the right", () => {
     expect(CHAT[0]).toMatchObject({ from: "haris", text: "Kamu itu type aku banget." });
-    expect(CHAT[1]).toMatchObject({ from: "me", text: "Eh masa si?" });
+    expect(CHAT.map((c) => [c.from, c.text])).toEqual([
+      ["haris", "Kamu itu type aku banget."], ["me", "Masasi?"],
+      ["haris", "Iya aku udah cinta banget sama kamu."], ["me", "Ehhh..."],
+    ]);
   });
 });

@@ -45,3 +45,31 @@ export function FloralLayer({ on }: { on: boolean }) {
     </div>
   );
 }
+
+export function HeartRain({ on }: { on: boolean }) {
+  if (!on) return null;
+  return (
+    <div className="heart-rain" aria-hidden="true">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <span key={i} style={{ left: `${(i * 61 + 7) % 100}%`, fontSize: `${10 + (i % 3) * 5}px`, animationDelay: `${(i * 1.7) % 14}s`, animationDuration: `${12 + (i % 4) * 3}s` }}>♥</span>
+      ))}
+    </div>
+  );
+}
+
+export function RiseUp({ on }: { on: boolean }) {
+  if (!on) return null;
+  return (
+    <div className="rise-up" aria-hidden="true">
+      {Array.from({ length: 70 }).map((_, i) => {
+        const flower = i % 3 !== 0;
+        const size = 40 + ((i * 37) % 70);
+        return (
+          <div key={i} className="riser" style={{ left: `${(i * 43) % 100}%`, ["--h" as string]: `${20 + ((i * 29) % 95)}vh`, animationDelay: `${(i % 14) * 0.08}s`, width: size, height: size }}>
+            {flower ? <Flower size={size} c={COLORS[i % COLORS.length]!} petals={5 + (i % 3)} rot={i * 23} /> : <span style={{ fontSize: size * 0.8 }}>♥</span>}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

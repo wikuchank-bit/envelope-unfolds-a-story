@@ -12,7 +12,13 @@ const KEYS: [string, string][] = [
   ["7", "PQRS"], ["8", "TUV"], ["9", "WXYZ"],
 ];
 
-export function LockScreen({ onUnlock }: { onUnlock?: () => void }) {
+const WALL: [number, number, number, number, string][] = [
+  [8, 12, 9, -15, "♥"], [78, 9, 7, 20, "💗"], [55, 22, 5, 0, "✦"], [15, 40, 6, 10, "🌸"], [85, 38, 10, -10, "♥"],
+  [40, 55, 5, 15, "✨"], [10, 68, 11, 12, "💕"], [72, 62, 6, -20, "🌷"], [30, 82, 7, -8, "♥"], [80, 84, 8, 18, "💖"],
+  [52, 74, 4, 0, "✦"], [25, 25, 4, 0, "✦"], [62, 45, 7, 25, "♥"],
+];
+
+export function LockScreen({ onUnlock, onCorrect }: { onUnlock?: () => void; onCorrect?: () => void }) {
   const [now, setNow] = useState<Date | null>(null);
   const [mode, setMode] = useState<"lock" | "code" | "open">("lock");
   const [code, setCode] = useState("");
@@ -32,7 +38,8 @@ export function LockScreen({ onUnlock }: { onUnlock?: () => void }) {
       setTimeout(() => {
         if (checkPasscode(next)) {
           setMode("open");
-          setTimeout(() => onUnlock?.(), 1900);
+          onCorrect?.();
+          setTimeout(() => onUnlock?.(), 3000);
         } else {
           setShake(true);
           setTimeout(() => { setShake(false); setCode(""); }, 500);
@@ -48,7 +55,9 @@ export function LockScreen({ onUnlock }: { onUnlock?: () => void }) {
     <div className="iphone">
       <div className="iphone-btn b1" /><div className="iphone-btn b2" /><div className="iphone-btn b3" /><div className="iphone-btn b4" />
       <div className="iphone-screen">
-        <div className={`ls-wall ${mode !== "lock" ? "blur" : ""}`} />
+        <div className={`ls-wall ${mode !== "lock" ? "blur" : ""}`}>
+          {WALL.map((h, i) => <span key={i} style={{ left: `${h[0]}%`, top: `${h[1]}%`, fontSize: `${h[2]}cqw`, rotate: `${h[3]}deg`, animationDelay: `${i * 0.3}s` }}>{h[4]}</span>)}
+        </div>
         <div className="ls-status">
           <span>{time}</span>
           <span className="ls-icons">
@@ -87,10 +96,10 @@ export function LockScreen({ onUnlock }: { onUnlock?: () => void }) {
             </div>
             <div className="ls-keys">
               {KEYS.map(([n, l]) => (
-                <button key={n} type="button" onClick={() => press(n)}><b>{n}</b><small>{l}</small></button>
+                <button key={n} type="button" className="hk" onClick={() => press(n)}><b>{n}</b><small>{l}</small></button>
               ))}
               <span />
-              <button type="button" onClick={() => press("0")}><b>0</b><small /></button>
+              <button type="button" className="hk" onClick={() => press("0")}><b>0</b><small /></button>
               <span />
             </div>
             <div className="ls-pad-foot">
