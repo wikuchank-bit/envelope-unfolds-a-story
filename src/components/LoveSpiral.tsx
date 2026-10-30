@@ -97,6 +97,12 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
       if (!s.drag) {
         s.rotY += s.velY;
         s.velY += (0.004 - s.velY) * 0.02;
+        // while morphing, gently settle back to a front-facing view
+        if (s.morph >= 0 && mt0 < 1) {
+          const targetY = Math.round(s.rotY / (Math.PI * 2)) * Math.PI * 2;
+          s.rotY += (targetY - s.rotY) * 0.06;
+          s.rotX += (-0.15 - s.rotX) * 0.06;
+        }
       }
 
       const cosY = Math.cos(s.rotY), sinY = Math.sin(s.rotY);
