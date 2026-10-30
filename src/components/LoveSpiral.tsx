@@ -3,16 +3,19 @@ import { useEffect, useRef, useState } from "react";
 const N = 420;
 
 function heartPoints(n: number) {
-  // sample a grid inside the classic heart curve, pick n evenly
-  const pts: [number, number][] = [];
-  for (let y = 1.3; y >= -1.2; y -= 0.045) {
-    for (let x = -1.25; x <= 1.25; x += 0.11) {
-      const v = (x * x + y * y - 1) ** 3 - x * x * y ** 3;
-      if (v <= 0) pts.push([x, -y]);
-    }
-  }
+  // concentric heart outlines (parametric curve), more words on outer rings
+  const rings = 9, ks = Array.from({ length: rings }, (_, i) => 0.2 + (0.8 * (i + 1)) / rings);
+  const total = ks.reduce((a, k) => a + k, 0);
   const out: [number, number][] = [];
-  for (let i = 0; i < n; i++) out.push(pts[Math.floor((i * pts.length) / n)]);
+  ks.forEach((k, ri) => {
+    const m = ri === rings - 1 ? n - out.length : Math.round((n * k) / total);
+    for (let i = 0; i < m; i++) {
+      const t = (i / m) * Math.PI * 2 + ri * 0.3;
+      const x = 16 * Math.sin(t) ** 3;
+      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+      out.push([(x / 17) * k * 1.15, (-y / 17) * k * 1.15]);
+    }
+  });
   return out;
 }
 
