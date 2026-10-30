@@ -196,8 +196,8 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 .ls-notif { background: rgba(255,255,255,.35); border: 2px solid rgba(255,255,255,.7); }
 .ls-notif-ic { background: linear-gradient(180deg, #ff9ec0, #ff5d8f); }
 .ls-keys { gap: 3.5cqw 6cqw; }
-.ls-keys button.hk { border: none; border-radius: 0; background: none; backdrop-filter: none; position: relative; transition: transform .12s; }
-.ls-keys button.hk::before { content: ""; position: absolute; inset: 0; background: rgba(255,255,255,.32); clip-path: path("M50 88 C20 66 4 50 4 30 C4 16 15 6 28 6 C38 6 45 12 50 20 C55 12 62 6 72 6 C85 6 96 16 96 30 C96 50 80 66 50 88 Z"); transform: scale(calc(20 / 100 * 1cqw / 1px)); transform-origin: 0 0; z-index: -1; }
+.ls-keys button.hk { isolation: isolate; border: none; border-radius: 0; background: none; backdrop-filter: none; position: relative; transition: transform .12s; }
+.ls-keys button.hk::before { content: ""; position: absolute; inset: -4%; background: rgba(255,255,255,.34); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 92'%3E%3Cpath d='M50 88C20 66 4 50 4 30 4 16 15 6 28 6c10 0 17 6 22 14 5-8 12-14 22-14 13 0 24 10 24 24 0 20-16 36-46 58z'/%3E%3C/svg%3E") center/contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 92'%3E%3Cpath d='M50 88C20 66 4 50 4 30 4 16 15 6 28 6c10 0 17 6 22 14 5-8 12-14 22-14 13 0 24 10 24 24 0 20-16 36-46 58z'/%3E%3C/svg%3E") center/contain no-repeat; z-index: -1; }
 .ls-keys button.hk:active { transform: scale(.9); }
 .ls-keys button.hk:active::before { background: rgba(255,255,255,.7); }
 .ls-keys button.hk b, .ls-keys button.hk small { position: relative; top: -1.2cqw; }
