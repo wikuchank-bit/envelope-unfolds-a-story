@@ -81,12 +81,12 @@ function Counter() {
   );
 }
 
-function MusicButton({ audio, playing, toggle }: { audio: boolean; playing: boolean; toggle: () => void }) {
+function MusicButton({ audio, playing, preview, toggle }: { audio: boolean; playing: boolean; preview: boolean; toggle: () => void }) {
   if (!audio) return null;
   return (
     <button className={`music ${playing ? "on" : ""}`} type="button" onClick={toggle} aria-label={playing ? "Pause music" : "Play music"}>
       <span className="bars"><i /><i /><i /><i /></span>
-      <span className="music-t">{playing ? "Now playing" : "Paused"}<small>You're Gonna Live Forever in Me · John Mayer</small></span>
+      <span className="music-t">{playing ? "Now playing" : "Paused"}<small>You're Gonna Live Forever in Me · John Mayer{preview ? " (preview)" : ""}</small></span>
     </button>
   );
 }
@@ -98,9 +98,18 @@ function Index() {
   const [screen, setScreen] = useState<Screen>("envelope");
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
+  const [songSrc, setSongSrc] = useState("/song.mp3");
+  const [zoom, setZoom] = useState<number | null>(null);
   const audio = useRef<HTMLAudioElement>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
   useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  useEffect(() => {
+    if (zoom === null) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setZoom(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [zoom]);
 
   const play = () => {
     const a = audio.current; if (!a) return;
@@ -108,6 +117,12 @@ function Index() {
     a.play().then(() => { setPlaying(true); setStarted(true); }).catch(() => setStarted(false));
   };
   const toggle = () => { const a = audio.current; if (!a) return; if (a.paused) play(); else { a.pause(); setPlaying(false); } };
+  // If the full song file isn't uploaded yet, fall back to Apple's legal preview.
+  const audioError = () => {
+    if (songSrc === SONG_PREVIEW) return;
+    setSongSrc(SONG_PREVIEW);
+    if (opened) setTimeout(() => audio.current?.play().catch(() => {}), 100);
+  };
 
   const openEnvelope = () => {
     if (opened) return;
@@ -122,8 +137,8 @@ function Index() {
 
   return (
     <>
-      <audio ref={audio} src="/song.mp3" loop preload="auto" onPause={() => setPlaying(false)} onPlay={() => setPlaying(true)} />
-      <MusicButton audio={started} playing={playing} toggle={toggle} />
+      <audio ref={audio} src={songSrc} loop preload="auto" onError={audioError} onPause={() => setPlaying(false)} onPlay={() => { setPlaying(true); setStarted(true); }} />
+      <MusicButton audio={started} playing={playing} preview={songSrc === SONG_PREVIEW} toggle={toggle} />
       <FloralLayer on={floral} />
 
       <section className={`screen ${screen === "envelope" ? "active" : ""}`} id="s-envelope" aria-hidden={screen !== "envelope"}>
