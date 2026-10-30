@@ -23,7 +23,7 @@ body { background: #0a0714; font-family: -apple-system, BlinkMacSystemFont, "SF 
 .float-hearts span { position: absolute; bottom: -40px; color: #ff5c8a; opacity: 0; text-shadow: 0 0 12px rgba(255,92,138,.6); animation: rise linear infinite; }
 @keyframes rise { 0% { transform: translateY(0) scale(.8); opacity: 0; } 15% { opacity: .75; } 100% { transform: translateY(-110vh) scale(1.2) rotate(20deg); opacity: 0; } }
 .envelope.open .env-flap { transform: rotateX(180deg); z-index: 0; }
-.envelope.open .env-seal { opacity: 0; transform: scale(.5); }
+.envelope.open .env-seal { opacity: 0; transform: scale(.5); animation: none; }
 .envelope.open .env-letter { transform: translateY(-118%); }
 .env-hint { font-size: 12px; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.42); animation: pulse 2.4s ease-in-out infinite; }
 .envelope.open ~ .env-hint, .env-wrap:has(.envelope.open) ~ .env-hint { opacity: 0; transition: opacity .4s; animation: none; }
