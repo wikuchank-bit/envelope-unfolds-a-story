@@ -41,3 +41,42 @@ body { background: #0a0714; font-family: -apple-system, BlinkMacSystemFont, "SF 
 .btn-continue:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -8px rgba(30,60,100,.85); }
 .btn-continue:active { transform: translateY(0) scale(.97); }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* ============ IPHONE LOCK SCREEN ============ */
+#s-lock { background: radial-gradient(120% 90% at 50% 0%, #1a3050 0%, #0c1628 55%, #04070e 100%); padding: 24px 12px; }
+.iphone { position: relative; height: min(88vh, 760px); aspect-ratio: 71.5 / 147.6; border-radius: 17% / 8.2%; padding: 2.4%; background: linear-gradient(145deg, #5a5d63, #1d1e21 40%, #3b3d41 70%, #17181a); box-shadow: 0 0 0 1.5px #0b0b0c, inset 0 0 0 1.5px rgba(255,255,255,.18), 0 50px 90px -20px rgba(0,0,0,.85); user-select: none; }
+.iphone-btn { position: absolute; width: 4px; background: linear-gradient(90deg, #2a2b2e, #55585d); border-radius: 2px; }
+.iphone-btn.b1 { left: -3px; top: 16%; height: 4.5%; } .iphone-btn.b2 { left: -3px; top: 24%; height: 8.5%; } .iphone-btn.b3 { left: -3px; top: 35%; height: 8.5%; } .iphone-btn.b4 { right: -3px; top: 27%; height: 13%; }
+.iphone-screen { position: relative; width: 100%; height: 100%; border-radius: 14.5% / 6.9%; overflow: hidden; background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif; container-type: inline-size; }
+.ls-wall { position: absolute; inset: 0; background: radial-gradient(80% 50% at 30% 20%, #ff7aa2 0%, transparent 60%), radial-gradient(70% 50% at 80% 70%, #7a5cff 0%, transparent 60%), radial-gradient(90% 60% at 50% 100%, #ff4d6d 0%, transparent 70%), linear-gradient(180deg, #2b1745, #120a24); transition: filter .4s, transform .4s; }
+.ls-wall.blur { filter: blur(18px) brightness(.55); transform: scale(1.1); }
+.iphone-island { position: absolute; top: 2.4%; left: 50%; transform: translateX(-50%); width: 34%; height: 4.4%; background: #000; border-radius: 999px; z-index: 10; }
+.ls-status { position: absolute; top: 2.9%; left: 0; right: 0; padding: 0 9%; display: flex; justify-content: space-between; align-items: center; font-size: 4.2cqw; font-weight: 600; z-index: 11; }
+.ls-icons { display: flex; gap: 5px; align-items: center; } .ls-icons svg { fill: #fff; width: 4.6cqw; }
+.ls-batt { width: 6.5cqw; height: 3.2cqw; border: 1px solid rgba(255,255,255,.5); border-radius: 3px; padding: 1px; } .ls-batt i { display: block; height: 100%; width: 80%; background: #fff; border-radius: 1.5px; }
+.ls-main, .ls-pad, .ls-open { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; }
+.ls-main { cursor: pointer; padding-top: 17%; }
+.ls-lock svg { fill: #fff; width: 4.5cqw; }
+.ls-date { margin-top: 2cqw; font-size: 5.2cqw; font-weight: 500; opacity: .9; }
+.ls-time { font-size: 24cqw; font-weight: 600; line-height: 1; letter-spacing: -.02em; background: linear-gradient(180deg, #fff, rgba(255,255,255,.82)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ls-notif { margin-top: 10cqw; width: 90%; display: flex; gap: 3cqw; align-items: center; padding: 3.5cqw; border-radius: 6cqw; background: rgba(255,255,255,.18); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font-size: 3.6cqw; }
+.ls-notif b { font-weight: 600; } .ls-notif p { opacity: .85; margin-top: 2px; }
+.ls-notif-ic { flex: none; width: 9cqw; height: 9cqw; border-radius: 2.2cqw; background: linear-gradient(180deg, #5ef27a, #24c13f); display: grid; place-items: center; font-size: 5cqw; }
+.ls-bottom { position: absolute; bottom: 9%; left: 11%; right: 11%; display: flex; justify-content: space-between; }
+.ls-round { width: 12cqw; height: 12cqw; border-radius: 50%; background: rgba(0,0,0,.35); backdrop-filter: blur(12px); display: grid; place-items: center; } .ls-round svg { fill: #fff; width: 5cqw; }
+.ls-swipe { position: absolute; bottom: 4.5%; font-size: 3.4cqw; opacity: .7; animation: pulse 2.4s ease-in-out infinite; }
+.ls-home { position: absolute; bottom: 1.4%; left: 50%; transform: translateX(-50%); width: 36%; height: 1.4cqw; border-radius: 999px; background: #fff; }
+.ls-pad { padding-top: 26%; }
+.ls-pad-title { font-size: 5cqw; font-weight: 500; }
+.ls-dots { display: flex; gap: 5cqw; margin: 5cqw 0 9cqw; }
+.ls-dots span { width: 3.4cqw; height: 3.4cqw; border-radius: 50%; border: 1.5px solid #fff; transition: background .15s; } .ls-dots span.on { background: #fff; }
+.ls-dots.shake { animation: shake .45s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-4cqw); } 40%,80% { transform: translateX(4cqw); } }
+.ls-keys { display: grid; grid-template-columns: repeat(3, 20cqw); gap: 4.5cqw 6.5cqw; }
+.ls-keys button { width: 20cqw; height: 20cqw; border-radius: 50%; border: none; background: rgba(255,255,255,.16); backdrop-filter: blur(10px); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; font-family: inherit; transition: background .1s; }
+.ls-keys button:active { background: rgba(255,255,255,.45); }
+.ls-keys b { font-size: 9cqw; font-weight: 400; line-height: 1; } .ls-keys small { font-size: 2.4cqw; letter-spacing: .18em; font-weight: 600; min-height: 3cqw; }
+.ls-pad-foot { position: absolute; bottom: 5%; left: 12%; right: 12%; display: flex; justify-content: space-between; }
+.ls-pad-foot button { background: none; border: none; color: #fff; font-family: inherit; font-size: 4.2cqw; cursor: pointer; }
+.ls-open { justify-content: center; animation: fadeIn .5s; } .ls-open-heart { font-size: 22cqw; color: #ff5c8a; animation: beat 1.6s infinite; } .ls-open p { font-size: 5cqw; margin-top: 2cqw; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

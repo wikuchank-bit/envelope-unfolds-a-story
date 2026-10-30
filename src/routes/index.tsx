@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
+import { LockScreen } from "@/components/LockScreen";
 import loveCss from "../love.css?url";
 
 export const Route = createFileRoute("/")({
@@ -19,7 +20,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [opened, setOpened] = useState(false);
-  const [screen, setScreen] = useState<"envelope" | "letter">("envelope");
+  const [screen, setScreen] = useState<"envelope" | "letter" | "lock">("envelope");
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
 
@@ -90,8 +91,12 @@ function Index() {
             </p>
             <p className="letter-sign">Always,<br />Me</p>
           </div>
-          <button className="btn-continue" type="button">Continue</button>
+          <button className="btn-continue" type="button" onClick={() => setScreen("lock")}>Continue</button>
         </div>
+      </section>
+
+      <section className={`screen ${screen === "lock" ? "active" : ""}`} id="s-lock" aria-hidden={screen !== "lock"}>
+        <LockScreen />
       </section>
     </>
   );
