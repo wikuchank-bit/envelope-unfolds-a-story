@@ -33,6 +33,19 @@ Even though we've had our fair share of arguments and moments when our egos got 
 // Relationship start: 22 November 2025
 export const START = new Date(2025, 10, 22, 0, 0, 0);
 
+// Legal 30-second preview of the exact song, hosted by Apple (iTunes).
+// Used as a fallback until the full song is uploaded as public/song.mp3.
+export const SONG_PREVIEW =
+  "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/42/46/7c/42467cf7-9c3f-cf69-698e-8d5b13aa0bc8/mzaf_13855212788007432767.plus.aac.p.m4a";
+
+// "A Little Conversation" — shown from my point of view: Haris on the left, me on the right.
+export const CHAT: { from: "haris" | "me"; text: string }[] = [
+  { from: "haris", text: "Kamu itu type aku banget." },
+  { from: "me", text: "Eh masa si?" },
+];
+
+const TILTS = [-3, 2.5, -1.5, 3, -2.5];
+
 export function elapsed(from: Date, to: Date) {
   let s = Math.max(0, Math.floor((to.getTime() - from.getTime()) / 1000));
   const days = Math.floor(s / 86400); s -= days * 86400;
