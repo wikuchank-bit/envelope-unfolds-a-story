@@ -1,3 +1,4 @@
+import together from "@/assets/together.jpg";
 import { BEKASI, COUNTRIES, KL, MAP_H, MAP_W } from "@/lib/mapPaths";
 
 function Pin({ x, y, label, who, below }: { x: number; y: number; label: string; who: string; below?: boolean }) {
@@ -37,6 +38,11 @@ export function LdrMap() {
         </svg>
       </div>
       <p className="map-end">Separated by distance, connected by love. Happy anniversary, Haris. ♥</p>
+      <div className="wish">
+        <p className="script">one day, no more miles</p>
+        <p className="wish-text">I hope that one day these kilometres simply disappear — no more goodbyes at airports, no more good nights through a screen. Just you and me, in the same place, under the same sky, finally together for good.</p>
+        <img src={together} alt="A cartoon girl and boy running into each other's arms" width={1024} height={768} loading="lazy" className="wish-img" />
+      </div>
     </div>
   );
 }

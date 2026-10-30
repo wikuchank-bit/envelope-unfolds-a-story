@@ -103,8 +103,8 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 .chat-body { display: flex; flex-direction: column; gap: 6px; padding: 18px 14px 22px; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
 .msg { max-width: 76%; padding: 9px 14px; border-radius: 19px; font-size: 16px; line-height: 1.35; opacity: 0; }
 #s-story.active .msg { animation: msg-in .45s ease forwards; }
-.msg.haris { align-self: flex-start; background: #e9e9eb; color: #2b2b2e; border-bottom-left-radius: 5px; animation-delay: 1.5s !important; }
-.msg.me { align-self: flex-end; background: linear-gradient(135deg, #f0a3b8, #d9708f); color: #fff; border-bottom-right-radius: 5px; animation-delay: 2.6s !important; }
+.msg.haris { align-self: flex-start; background: #e9e9eb; color: #2b2b2e; border-bottom-left-radius: 5px; }
+.msg.me { align-self: flex-end; background: linear-gradient(180deg, #3a9bff, #0a7cff); color: #fff; border-bottom-right-radius: 5px; }
 @keyframes msg-in { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: none; } }
 .typing { align-self: flex-start; display: flex; gap: 4px; padding: 11px 14px; border-radius: 19px; border-bottom-left-radius: 5px; background: #e9e9eb; opacity: 0; }
 #s-story.active .typing { animation: typing-show 1.5s ease .35s forwards; }
@@ -181,3 +181,36 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 .ls-open { justify-content: center; animation: fadeIn .5s; } .ls-open-heart { font-size: 22cqw; color: #ff5c8a; animation: beat 1.6s infinite; } .ls-open p { font-size: 5cqw; margin-top: 2cqw; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 .ls-open { animation: fadeIn .5s, unlockZoom 1.9s ease-in forwards; } @keyframes unlockZoom { 0%,60% { transform: none; } 100% { transform: scale(1.15); opacity: 0; } }
+
+/* ---- playful cartoon iPhone ---- */
+.iphone { background: linear-gradient(160deg, #ffc2d4, #ff8fb1 55%, #f77aa0); border: 4px solid #6b3a4c; box-shadow: 8px 10px 0 #6b3a4c, 0 40px 70px -20px rgba(160,60,100,.45); padding: 3.2%; }
+.iphone::before { background: linear-gradient(115deg, rgba(255,255,255,.55) 0%, transparent 14%); }
+.iphone-btn { width: 6px; background: #ff8fb1; border: 2px solid #6b3a4c; border-radius: 4px; }
+.iphone-btn.b1, .iphone-btn.b2, .iphone-btn.b3 { left: -9px; } .iphone-btn.b4 { right: -9px; }
+.iphone-screen { border: 3px solid #6b3a4c; border-radius: 10.5% / 5%; }
+.ls-wall { background: radial-gradient(60% 40% at 20% 15%, #ffd1e3 0%, transparent 70%), radial-gradient(60% 40% at 85% 55%, #ffb37a 0%, transparent 70%), radial-gradient(70% 45% at 30% 90%, #c58cff 0%, transparent 70%), linear-gradient(180deg, #ff7eb3 0%, #ff5d8f 45%, #b45cff 100%); overflow: hidden; }
+.ls-wall span { position: absolute; color: #fff; text-shadow: 0 2px 0 rgba(107,58,76,.25); animation: wall-float 5s ease-in-out infinite; }
+@keyframes wall-float { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2.5cqw) scale(1.08); } }
+.ls-wall.blur { filter: blur(6px) brightness(.85); }
+.ls-time { text-shadow: 0 .8cqw 0 rgba(107,58,76,.25); color: #fff; background: none; -webkit-background-clip: initial; background-clip: initial; font-weight: 800; }
+.ls-notif { background: rgba(255,255,255,.35); border: 2px solid rgba(255,255,255,.7); }
+.ls-notif-ic { background: linear-gradient(180deg, #ff9ec0, #ff5d8f); }
+.ls-keys { gap: 3.5cqw 6cqw; }
+.ls-keys button.hk { isolation: isolate; border: none; border-radius: 0; background: none; backdrop-filter: none; position: relative; transition: transform .12s; }
+.ls-keys button.hk::before { content: ""; position: absolute; inset: -4%; background: rgba(255,255,255,.34); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 92'%3E%3Cpath d='M50 88C20 66 4 50 4 30 4 16 15 6 28 6c10 0 17 6 22 14 5-8 12-14 22-14 13 0 24 10 24 24 0 20-16 36-46 58z'/%3E%3C/svg%3E") center/contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 92'%3E%3Cpath d='M50 88C20 66 4 50 4 30 4 16 15 6 28 6c10 0 17 6 22 14 5-8 12-14 22-14 13 0 24 10 24 24 0 20-16 36-46 58z'/%3E%3C/svg%3E") center/contain no-repeat; z-index: -1; }
+.ls-keys button.hk:active { transform: scale(.9); }
+.ls-keys button.hk:active::before { background: rgba(255,255,255,.7); }
+.ls-keys button.hk b, .ls-keys button.hk small { position: relative; top: -1.2cqw; }
+
+.heart-rain { position: fixed; inset: 0; pointer-events: none; z-index: 2; overflow: hidden; }
+.heart-rain span { position: absolute; top: -30px; color: #f2a0b8; opacity: 0; animation: heart-fall linear infinite; }
+@keyframes heart-fall { 0% { transform: translate(0,0) rotate(-10deg); opacity: 0; } 10% { opacity: .5; } 90% { opacity: .4; } 100% { transform: translate(40px,110vh) rotate(20deg); opacity: 0; } }
+
+.rise-up { position: fixed; inset: 0; pointer-events: none; z-index: 40; overflow: hidden; animation: rise-fade 4.2s ease forwards; }
+.riser { position: absolute; bottom: -120px; transform: translateX(-50%); display: grid; place-items: center; color: #ee7f9f; animation: riser 2.6s cubic-bezier(.2,.8,.3,1) forwards; }
+@keyframes riser { 0% { transform: translate(-50%, 0) scale(.4); opacity: 0; } 20% { opacity: 1; } 100% { transform: translate(-50%, calc(-1 * var(--h))) scale(1); opacity: 1; } }
+@keyframes rise-fade { 0%,70% { opacity: 1; } 100% { opacity: 0; } }
+
+.wish { margin: 48px auto 0; width: min(100%, 560px); text-align: center; }
+.wish-text { font-family: "Cormorant Garamond", serif; font-size: clamp(18px, 3.8vw, 22px); line-height: 1.6; color: #6b3a4c; margin-top: 10px; }
+.wish-img { display: block; width: 100%; height: auto; margin: 22px auto 0; border-radius: 28px; box-shadow: 0 26px 50px -26px rgba(170,80,110,.5); }

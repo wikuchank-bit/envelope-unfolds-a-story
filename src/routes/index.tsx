@@ -5,6 +5,7 @@ import { FloralLayer } from "@/components/Flowers";
 import { LoveSpiral } from "@/components/LoveSpiral";
 import { LdrMap } from "@/components/LdrMap";
 import { MEMORIES } from "@/lib/memories";
+import { HeartRain, RiseUp } from "@/components/Flowers";
 import loveCss from "../love.css?url";
 
 export const Route = createFileRoute("/")({
@@ -41,7 +42,9 @@ export const SONG_PREVIEW =
 // "A Little Conversation" — shown from my point of view: Haris on the left, me on the right.
 export const CHAT: { from: "haris" | "me"; text: string }[] = [
   { from: "haris", text: "Kamu itu type aku banget." },
-  { from: "me", text: "Eh masa si?" },
+  { from: "me", text: "Masasi?" },
+  { from: "haris", text: "Iya aku udah cinta banget sama kamu." },
+  { from: "me", text: "Ehhh..." },
 ];
 
 const TILTS = [-3, 2.5, -1.5, 3, -2.5];
@@ -99,6 +102,7 @@ function Index() {
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [songSrc, setSongSrc] = useState("/song.mp3");
+  const [rising, setRising] = useState(false);
   const [zoom, setZoom] = useState<number | null>(null);
   const audio = useRef<HTMLAudioElement>(null);
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -141,7 +145,7 @@ function Index() {
     timers.current.push(setTimeout(() => setScreen("letter"), 2300));
   };
 
-  const floral = opened && (screen === "envelope" || screen === "letter");
+  const floral = opened && (screen === "envelope" || screen === "letter" || screen === "lock");
   const go = (s: Screen) => () => setScreen(s);
 
   return (
@@ -149,6 +153,8 @@ function Index() {
       <audio ref={audio} src={songSrc} loop preload="auto" onError={audioError} onPause={() => setPlaying(false)} onPlay={() => { setPlaying(true); setStarted(true); }} />
       <MusicButton audio={started} playing={playing} preview={songSrc === SONG_PREVIEW} toggle={toggle} />
       <FloralLayer on={floral} />
+      <HeartRain on={opened} />
+      <RiseUp on={rising} />
 
       <section className={`screen ${screen === "envelope" ? "active" : ""}`} id="s-envelope" aria-hidden={screen !== "envelope"}>
         <div className="env-stage">
@@ -190,7 +196,7 @@ function Index() {
       </section>
 
       <section className={`screen ${screen === "lock" ? "active" : ""}`} id="s-lock" aria-hidden={screen !== "lock"}>
-        {screen === "lock" && <LockScreen onUnlock={go("time")} />}
+        {screen === "lock" && <LockScreen onCorrect={() => { setRising(true); timers.current.push(setTimeout(() => setRising(false), 4200)); }} onUnlock={go("time")} />}
       </section>
 
       <section className={`screen ${screen === "time" ? "active" : ""}`} id="s-time" aria-hidden={screen !== "time"}>
@@ -224,7 +230,7 @@ function Index() {
               <div className="chat-head"><span className="chat-ava">H</span><div><b>Haris</b><small>iMessage</small></div></div>
               <div className="chat-body">
                 <div className="typing" aria-hidden="true"><i /><i /><i /></div>
-                {CHAT.map((c, i) => <div key={i} className={`msg ${c.from}`}>{c.text}</div>)}
+                {CHAT.map((c, i) => <div key={i} className={`msg ${c.from}`} style={{ animationDelay: `${1.5 + i * 1.2}s` }}>{c.text}</div>)}
               </div>
             </div>
           </div>
