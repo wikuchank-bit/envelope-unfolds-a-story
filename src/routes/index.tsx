@@ -196,21 +196,43 @@ function Index() {
 
       <section className={`screen ${screen === "story" ? "active" : ""}`} id="s-story" aria-hidden={screen !== "story"}>
         <div className="sec story">
-          <p className="script">chapter by chapter</p>
-          <h2 className="sec-title">Our Story</h2>
-          <ol className="timeline">
+          <p className="script">little pieces of us</p>
+          <h2 className="sec-title">Our Memories</h2>
+          <div className="gallery">
             {MEMORIES.map((m, i) => (
-              <li key={i} className={`mem ${i % 2 ? "r" : "l"}`} style={{ animationDelay: `${0.2 + i * 0.15}s` }}>
-                <figure className="polaroid" style={{ rotate: `${i % 2 ? 2.5 : -2.5}deg` }}>
-                  {m.image ? <img src={m.image} alt={m.title} loading="lazy" /> : <div className="ph"><span>♥</span><small>photo coming soon</small></div>}
-                  <figcaption>{m.date}</figcaption>
-                </figure>
-                <div className="mem-text"><h3>{m.title}</h3><p>{m.caption}</p></div>
-              </li>
+              <button key={i} type="button" className="polaroid" style={{ rotate: `${TILTS[i % TILTS.length]}deg`, animationDelay: `${0.15 + i * 0.12}s` }}
+                onClick={() => setZoom(i)} aria-label={`Open photo: ${m.caption}`}>
+                {m.image ? <img src={m.image} alt={m.caption} loading="lazy" /> : <div className="ph"><span>♥</span><small>photo coming soon</small></div>}
+                <span className="pol-cap">{m.caption}</span>
+              </button>
             ))}
-          </ol>
+          </div>
+
+          <div className="chat">
+            <p className="script">just us, talking</p>
+            <h2 className="chat-title">A Little Conversation</h2>
+            <div className="chat-card">
+              <div className="chat-head"><span className="chat-ava">H</span><div><b>Haris</b><small>iMessage</small></div></div>
+              <div className="chat-body">
+                <div className="typing" aria-hidden="true"><i /><i /><i /></div>
+                {CHAT.map((c, i) => <div key={i} className={`msg ${c.from}`}>{c.text}</div>)}
+              </div>
+            </div>
+          </div>
+
           <button className="btn-soft show" type="button" onClick={go("spiral")}>Next</button>
         </div>
+        {zoom !== null && MEMORIES[zoom] && (
+          <div className="lightbox" role="dialog" aria-modal="true" aria-label={MEMORIES[zoom].caption} onClick={() => setZoom(null)}>
+            <figure onClick={(e) => e.stopPropagation()}>
+              {MEMORIES[zoom].image
+                ? <img src={MEMORIES[zoom].image} alt={MEMORIES[zoom].caption} />
+                : <div className="ph"><span>♥</span><small>photo coming soon</small></div>}
+              <figcaption>{MEMORIES[zoom].caption}</figcaption>
+            </figure>
+            <button className="lightbox-close" type="button" aria-label="Close photo" onClick={() => setZoom(null)}>×</button>
+          </div>
+        )}
       </section>
 
       <section className={`screen ${screen === "spiral" ? "active" : ""}`} id="s-spiral" aria-hidden={screen !== "spiral"}>
