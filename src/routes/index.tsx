@@ -49,10 +49,25 @@ function Index() {
               <div className="env-letter"><span>For you</span></div>
               <div className="env-front" />
               <div className="env-flap" />
-              <div className="env-seal">♥</div>
+              <div className="env-seal" aria-hidden="true">
+                <svg viewBox="0 0 64 58">
+                  <defs>
+                    <radialGradient id="sealG" cx="35%" cy="30%" r="75%">
+                      <stop offset="0%" stopColor="#ff8fb0" />
+                      <stop offset="55%" stopColor="#e0245e" />
+                      <stop offset="100%" stopColor="#8e1038" />
+                    </radialGradient>
+                  </defs>
+                  <path d="M32 56 C10 40 2 28 2 17 C2 8 9 2 17 2 C24 2 29 6 32 12 C35 6 40 2 47 2 C55 2 62 8 62 17 C62 28 54 40 32 56 Z" fill="url(#sealG)" />
+                  <ellipse cx="19" cy="14" rx="7" ry="4" fill="#fff" opacity=".45" transform="rotate(-25 19 14)" />
+                </svg>
+              </div>
             </div>
           </div>
           <div className="env-hint">Tap to open</div>
+          <div className="float-hearts" aria-hidden="true">
+            {[8,22,37,55,70,84,93].map((l,i)=>(<span key={i} style={{left:`${l}%`,fontSize:`${14+(i%3)*8}px`,animationDuration:`${9+(i%4)*2}s`,animationDelay:`${i*1.3}s`}}>♥</span>))}
+          </div>
         </div>
       </section>
 

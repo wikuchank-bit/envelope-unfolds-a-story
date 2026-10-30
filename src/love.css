@@ -16,7 +16,12 @@ body { background: #0a0714; font-family: -apple-system, BlinkMacSystemFont, "SF 
 .env-letter span { font-size: 13px; letter-spacing: .06em; color: #7a93ad; font-style: italic; }
 .env-front { z-index: 3; clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%); background: linear-gradient(180deg, #c4d8ec 0%, #a0bcd8 100%); border-radius: 8px; box-shadow: inset 0 2px 0 rgba(255,255,255,.4); }
 .env-flap { z-index: 4; height: 60%; clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(180deg, #d0e2f4 0%, #aec8e0 100%); transform-origin: top center; transform-style: preserve-3d; transition: transform .75s cubic-bezier(.5,0,.2,1), z-index 0s .35s; border-radius: 8px 8px 0 0; }
-.env-seal { position: absolute; top: 60%; left: 50%; z-index: 5; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #4a7aaa, #1e3d60 70%); box-shadow: 0 4px 12px rgba(20,50,90,.45), inset 0 -2px 6px rgba(0,0,0,.25); display: grid; place-items: center; color: #dce8f4; font-size: 18px; transition: opacity .35s, transform .35s; }
+.env-seal { position: absolute; top: 60%; left: 50%; z-index: 5; width: 64px; height: 58px; margin: -29px 0 0 -32px; display: grid; place-items: center; filter: drop-shadow(0 6px 10px rgba(120,20,50,.45)); transition: opacity .35s, transform .35s; animation: beat 1.6s ease-in-out infinite; }
+.env-seal svg { width: 100%; height: 100%; }
+@keyframes beat { 0%,100% { transform: scale(1); } 15% { transform: scale(1.12); } 30% { transform: scale(.98); } 45% { transform: scale(1.08); } }
+.float-hearts { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.float-hearts span { position: absolute; bottom: -40px; color: #ff5c8a; opacity: 0; text-shadow: 0 0 12px rgba(255,92,138,.6); animation: rise linear infinite; }
+@keyframes rise { 0% { transform: translateY(0) scale(.8); opacity: 0; } 15% { opacity: .75; } 100% { transform: translateY(-110vh) scale(1.2) rotate(20deg); opacity: 0; } }
 .envelope.open .env-flap { transform: rotateX(180deg); z-index: 0; }
 .envelope.open .env-seal { opacity: 0; transform: scale(.5); }
 .envelope.open .env-letter { transform: translateY(-118%); }
