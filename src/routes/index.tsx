@@ -122,6 +122,7 @@ function Index() {
       const t = setTimeout(() => audio.current?.play().catch(() => {}), 100);
       return () => clearTimeout(t);
     }
+    return undefined;
   }, [songSrc, opened]);
 
   const play = () => {
