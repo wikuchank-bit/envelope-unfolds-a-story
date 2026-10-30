@@ -44,10 +44,10 @@ body { background: #0a0714; font-family: -apple-system, BlinkMacSystemFont, "SF 
 
 /* ============ IPHONE LOCK SCREEN ============ */
 #s-lock { background: radial-gradient(120% 90% at 50% 0%, #1a3050 0%, #0c1628 55%, #04070e 100%); padding: 24px 12px; }
-.iphone { position: relative; height: min(88vh, 760px); aspect-ratio: 71.5 / 147.6; border-radius: 15.5% / 7.5%; padding: 3.2%; background: linear-gradient(145deg, #5a5d63, #1d1e21 40%, #3b3d41 70%, #17181a); box-shadow: 0 0 0 1.5px #0b0b0c, inset 0 0 0 1.5px rgba(255,255,255,.18), 0 50px 90px -20px rgba(0,0,0,.85); user-select: none; }
+.iphone { position: relative; height: min(88vh, 760px); aspect-ratio: 71.5 / 147.6; border-radius: 17% / 8.2%; padding: 2.4%; background: linear-gradient(145deg, #5a5d63, #1d1e21 40%, #3b3d41 70%, #17181a); box-shadow: 0 0 0 1.5px #0b0b0c, inset 0 0 0 1.5px rgba(255,255,255,.18), 0 50px 90px -20px rgba(0,0,0,.85); user-select: none; }
 .iphone-btn { position: absolute; width: 4px; background: linear-gradient(90deg, #2a2b2e, #55585d); border-radius: 2px; }
 .iphone-btn.b1 { left: -3px; top: 16%; height: 4.5%; } .iphone-btn.b2 { left: -3px; top: 24%; height: 8.5%; } .iphone-btn.b3 { left: -3px; top: 35%; height: 8.5%; } .iphone-btn.b4 { right: -3px; top: 27%; height: 13%; }
-.iphone-screen { position: relative; width: 100%; height: 100%; border-radius: 12.5% / 6%; overflow: hidden; background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif; container-type: inline-size; }
+.iphone-screen { position: relative; width: 100%; height: 100%; border-radius: 14.5% / 6.9%; overflow: hidden; background: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif; container-type: inline-size; }
 .ls-wall { position: absolute; inset: 0; background: radial-gradient(80% 50% at 30% 20%, #ff7aa2 0%, transparent 60%), radial-gradient(70% 50% at 80% 70%, #7a5cff 0%, transparent 60%), radial-gradient(90% 60% at 50% 100%, #ff4d6d 0%, transparent 70%), linear-gradient(180deg, #2b1745, #120a24); transition: filter .4s, transform .4s; }
 .ls-wall.blur { filter: blur(18px) brightness(.55); transform: scale(1.1); }
 .iphone-island { position: absolute; top: 2.4%; left: 50%; transform: translateX(-50%); width: 34%; height: 4.4%; background: #000; border-radius: 999px; z-index: 10; }
@@ -55,7 +55,7 @@ body { background: #0a0714; font-family: -apple-system, BlinkMacSystemFont, "SF 
 .ls-icons { display: flex; gap: 5px; align-items: center; } .ls-icons svg { fill: #fff; width: 4.6cqw; }
 .ls-batt { width: 6.5cqw; height: 3.2cqw; border: 1px solid rgba(255,255,255,.5); border-radius: 3px; padding: 1px; } .ls-batt i { display: block; height: 100%; width: 80%; background: #fff; border-radius: 1.5px; }
 .ls-main, .ls-pad, .ls-open { position: absolute; inset: 0; z-index: 5; display: flex; flex-direction: column; align-items: center; }
-.ls-main { cursor: pointer; padding-top: 14%; }
+.ls-main { cursor: pointer; padding-top: 17%; }
 .ls-lock svg { fill: #fff; width: 4.5cqw; }
 .ls-date { margin-top: 2cqw; font-size: 5.2cqw; font-weight: 500; opacity: .9; }
 .ls-time { font-size: 24cqw; font-weight: 600; line-height: 1; letter-spacing: -.02em; background: linear-gradient(180deg, #fff, rgba(255,255,255,.82)); -webkit-background-clip: text; background-clip: text; color: transparent; }
