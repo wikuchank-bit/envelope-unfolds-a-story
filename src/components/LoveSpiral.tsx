@@ -94,6 +94,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
       ctx.clearRect(0, 0, w, h);
 
       // idle spin + drag inertia easing back to idle speed
+      const mt0 = s.morph < 0 ? 0 : (now - s.morph) / 2400;
       if (!s.drag) {
         s.rotY += s.velY;
         s.velY += (0.004 - s.velY) * 0.02;
