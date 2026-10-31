@@ -1,24 +1,38 @@
 import { useEffect, useRef, useState } from "react";
 
-const N = 1000;
+const N = 1400;
 
 // A complete volumetric 3D heart: the classic implicit heart surface
 //   f(x,y,z) = (x² + 9/4 z² + y² − 1)³ − x²y³ − (9/80)y²z³ ≤ 0
-// filled with evenly distributed interior points, so it reads as a full
-// heart from every angle — front, back, sides, top and bottom.
+// Most particles sit ON the surface (crisp silhouette from every angle),
+// the rest fill the interior so the volume never looks hollow.
 function heartVolume(n: number) {
-  const pts: [number, number, number][] = [];
-  const inside = (x: number, y: number, z: number) => {
+  const f = (x: number, y: number, z: number) => {
     const a = x * x + (9 / 4) * z * z + y * y - 1;
-    return a * a * a - x * x * y * y * y - (9 / 80) * y * y * z * z * z <= 0;
+    return a * a * a - x * x * y * y * y - (9 / 80) * y * y * z * z * z;
   };
-  // rejection-sample the bounding box; keep interior points
-  let guard = 0;
-  while (pts.length < n && guard++ < n * 200) {
-    const x = (Math.random() * 2 - 1) * 1.25;
-    const y = -1.15 + Math.random() * 2.6;
-    const z = (Math.random() * 2 - 1) * 0.75;
-    if (inside(x, y, z)) pts.push([x, y, z]);
+  const sampleInterior = (): [number, number, number] => {
+    for (;;) {
+      const x = (Math.random() * 2 - 1) * 1.25;
+      const y = -1.15 + Math.random() * 2.6;
+      const z = (Math.random() * 2 - 1) * 0.75;
+      if (f(x, y, z) <= 0) return [x, y, z];
+    }
+  };
+  // push an interior point outward along its ray until it hits the surface
+  const toSurface = (p: [number, number, number]): [number, number, number] => {
+    let lo = 1, hi = 3;
+    for (let i = 0; i < 24; i++) {
+      const mid = (lo + hi) / 2;
+      if (f(p[0] * mid, p[1] * mid, p[2] * mid) <= 0) lo = mid; else hi = mid;
+    }
+    return [p[0] * lo, p[1] * lo, p[2] * lo];
+  };
+  const pts: [number, number, number][] = [];
+  const surfaceN = Math.round(n * 0.72);
+  for (let i = 0; i < n; i++) {
+    const p = sampleInterior();
+    pts.push(i < surfaceN ? toSurface(p) : p);
   }
   // normalize so the farthest point sits at radius ~1.05 (fits any rotation)
   let maxR = 0;
@@ -56,7 +70,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         hy: h[1],
         hz: h[2],
         delay: Math.random() * 0.5,
-        size: 7 + Math.random() * 3.5,
+        size: 7.5 + Math.random() * 4,
         a: 0.55 + Math.random() * 0.45,
       };
     });
@@ -130,9 +144,9 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         const sc = 3 / (3 - z2 * 0.85);
         const depth = Math.max(0, Math.min(1, (z2 + 1.05) / 2.1)); // 0 far → 1 near
         ctx.font = `500 ${Math.max(3, p.size * sc * (S / 150))}px "Cormorant Garamond", Georgia, serif`;
-        ctx.fillStyle = `rgba(${140 + Math.round(115 * depth)},${60 + Math.round(130 * depth)},${100 + Math.round(110 * depth)},${(0.22 + 0.78 * depth) * p.a})`;
+        ctx.fillStyle = `rgba(${130 + Math.round(125 * depth)},${50 + Math.round(140 * depth)},${95 + Math.round(115 * depth)},${(0.14 + 0.86 * depth) * p.a})`;
         ctx.shadowColor = "rgba(255,120,170,.8)";
-        ctx.shadowBlur = depth > 0.6 ? 6 : 0;
+        ctx.shadowBlur = depth > 0.55 ? 7 : 0;
         ctx.fillText("I love you", pxs[i]!, pys[i]!);
       }
       ctx.shadowBlur = 0;
