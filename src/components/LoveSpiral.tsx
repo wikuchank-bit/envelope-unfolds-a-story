@@ -1,43 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 
-const N = 300;
+const N = 1000;
 
-// Surface of a volumetric 3D heart: two heart-shaped domes (front & back)
-// plus a rounded side rim, so it reads as a heart from the front and has
-// real depth from every other angle.
-function heartSurface(n: number) {
+// A complete volumetric 3D heart: the classic implicit heart surface
+//   f(x,y,z) = (x² + 9/4 z² + y² − 1)³ − x²y³ − (9/80)y²z³ ≤ 0
+// filled with evenly distributed interior points, so it reads as a full
+// heart from every angle — front, back, sides, top and bottom.
+function heartVolume(n: number) {
   const pts: [number, number, number][] = [];
-  const curve = (t: number): [number, number] => {
-    const x = 16 * Math.sin(t) ** 3;
-    const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-    return [x / 17, -y / 17 - 0.12];
+  const inside = (x: number, y: number, z: number) => {
+    const a = x * x + (9 / 4) * z * z + y * y - 1;
+    return a * a * a - x * x * y * y * y - (9 / 80) * y * y * z * z * z <= 0;
   };
-  const Z = 0.42; // half-thickness
-  // front & back heart-shaped domes (~60% of points)
-  const domeN = Math.round(n * 0.6);
-  const T = 26, R = 7;
-  for (let i = 0; i < T && pts.length < domeN; i++) {
-    for (let j = 0; j < R && pts.length < domeN; j++) {
-      const t = ((i + 0.5) / T) * Math.PI * 2;
-      const r = Math.sqrt((j + 0.5) / R);
-      const [x, y] = curve(t);
-      const z = Z * Math.sqrt(1 - r * r);
-      pts.push([x * r, y * r, z]);
-      if (pts.length < domeN) pts.push([x * r, y * r, -z]);
-    }
+  // rejection-sample the bounding box; keep interior points
+  let guard = 0;
+  while (pts.length < n && guard++ < n * 200) {
+    const x = (Math.random() * 2 - 1) * 1.25;
+    const y = -1.15 + Math.random() * 2.6;
+    const z = (Math.random() * 2 - 1) * 0.75;
+    if (inside(x, y, z)) pts.push([x, y, z]);
   }
-  // rounded side rim (~40% of points)
-  const RT = 40, RZ = 5;
-  for (let i = 0; i < RT && pts.length < n; i++) {
-    for (let j = 0; j < RZ && pts.length < n; j++) {
-      const t = ((i + 0.5) / RT) * Math.PI * 2;
-      const [x, y] = curve(t);
-      const z = -Z + (2 * Z * (j + 0.5)) / RZ;
-      const inset = 1 - 0.12 * (z / Z) ** 2; // rounded edge, not a slab
-      pts.push([x * inset, y * inset, z]);
-    }
-  }
-  return pts;
+  // normalize so the farthest point sits at radius ~1.05 (fits any rotation)
+  let maxR = 0;
+  for (const p of pts) maxR = Math.max(maxR, Math.hypot(p[0], p[1], p[2]));
+  const k = 1.05 / maxR;
+  return pts.map((p) => [p[0] * k, p[1] * k, p[2] * k] as [number, number, number]);
 }
 
 export function LoveSpiral({ onDone }: { onDone: () => void }) {
@@ -46,6 +33,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
     rotY: 0,
     rotX: -0.15,
     velY: 0.004,
+    velX: 0,
     morph: -1,
     drag: null as null | { lx: number; ly: number; moved: number },
   });
@@ -54,7 +42,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     const c = cv.current!;
     const ctx = c.getContext("2d")!;
-    const hp = heartSurface(N);
+    const hp = heartVolume(N);
     const parts = hp.map((h, i) => {
       // scattered start positions on a sphere shell
       const th = i * 2.39996;
@@ -68,8 +56,8 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         hy: h[1],
         hz: h[2],
         delay: Math.random() * 0.5,
-        size: 7.5 + Math.random() * 3.5,
-        a: 0.6 + Math.random() * 0.4,
+        size: 7 + Math.random() * 3.5,
+        a: 0.55 + Math.random() * 0.45,
       };
     });
     const order = parts.map((_, i) => i);
@@ -97,7 +85,9 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
       const mt0 = s.morph < 0 ? 0 : (now - s.morph) / 2400;
       if (!s.drag) {
         s.rotY += s.velY;
+        s.rotX += s.velX;
         s.velY += (0.004 - s.velY) * 0.02;
+        s.velX *= 0.95;
         // while morphing, gently settle back to a front-facing view
         if (s.morph >= 0 && mt0 < 1) {
           const targetY = Math.round(s.rotY / (Math.PI * 2)) * Math.PI * 2;
@@ -108,7 +98,8 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
 
       const cosY = Math.cos(s.rotY), sinY = Math.sin(s.rotY);
       const cosX = Math.cos(s.rotX), sinX = Math.sin(s.rotX);
-      const S = Math.min(w, h) / 2.6;
+      // scale so the whole heart (radius ~1.05 × perspective gain) always fits
+      const S = Math.min(w, h) / 3.6;
       const cx = w / 2, cyc = h / 2;
       const mt = s.morph < 0 ? 0 : (now - s.morph) / 2400;
       const pulse = mt >= 1 ? 1 + Math.sin(now / 480) * 0.03 : 1;
@@ -137,11 +128,11 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         const p = parts[i]!;
         const z2 = zs[i]!;
         const sc = 3 / (3 - z2 * 0.85);
-        const depth = Math.max(0, Math.min(1, (z2 + 1) / 2)); // 0 far → 1 near
-        ctx.font = `500 ${Math.max(3, p.size * sc * (S / 205))}px "Cormorant Garamond", Georgia, serif`;
-        ctx.fillStyle = `rgba(${140 + Math.round(115 * depth)},${60 + Math.round(130 * depth)},${100 + Math.round(110 * depth)},${(0.25 + 0.75 * depth) * p.a})`;
+        const depth = Math.max(0, Math.min(1, (z2 + 1.05) / 2.1)); // 0 far → 1 near
+        ctx.font = `500 ${Math.max(3, p.size * sc * (S / 150))}px "Cormorant Garamond", Georgia, serif`;
+        ctx.fillStyle = `rgba(${140 + Math.round(115 * depth)},${60 + Math.round(130 * depth)},${100 + Math.round(110 * depth)},${(0.22 + 0.78 * depth) * p.a})`;
         ctx.shadowColor = "rgba(255,120,170,.8)";
-        ctx.shadowBlur = depth > 0.55 ? 7 : 0;
+        ctx.shadowBlur = depth > 0.6 ? 6 : 0;
         ctx.fillText("I love you", pxs[i]!, pys[i]!);
       }
       ctx.shadowBlur = 0;
@@ -150,7 +141,7 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         ctx.shadowColor = "rgba(255,120,170,.9)";
         ctx.shadowBlur = 24;
         ctx.fillStyle = "#ff8fb4";
-        ctx.font = `${30 * (S / 205) + 6}px serif`;
+        ctx.font = `${30 * (S / 150) + 6}px serif`;
         ctx.fillText("♥", cx, cyc + Math.sin(now / 300) * 2);
         ctx.shadowBlur = 0;
       }
@@ -174,8 +165,9 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
     const dy = e.clientY - s.drag.ly;
     s.drag.moved = Math.max(s.drag.moved, Math.hypot(dx, dy));
     s.rotY += dx * 0.006;
-    s.rotX = Math.max(-1.2, Math.min(1.2, s.rotX + dy * 0.006));
+    s.rotX += dy * 0.006; // full 360° — no clamp
     s.velY = dx * 0.006;
+    s.velX = dy * 0.006;
     s.drag.lx = e.clientX;
     s.drag.ly = e.clientY;
   };
