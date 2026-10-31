@@ -88,8 +88,9 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 
 /* photo lightbox */
 .lightbox { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: 24px; background: rgba(46,14,26,.72); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); animation: fadeIn .3s; cursor: zoom-out; }
-.lightbox figure { background: #fff; padding: 14px 14px 16px; width: min(88vw, 440px); box-shadow: 0 40px 90px -20px rgba(0,0,0,.6); animation: zoom-in .38s cubic-bezier(.3,1.4,.5,1); cursor: default; }
-.lightbox img, .lightbox .ph { width: 100%; max-height: 62vh; aspect-ratio: 4/5; object-fit: cover; display: block; }
+.lightbox figure { background: #fff; padding: 14px 14px 16px; width: min(92vw, 720px); box-shadow: 0 40px 90px -20px rgba(0,0,0,.6); animation: zoom-in .38s cubic-bezier(.3,1.4,.5,1); cursor: default; }
+.lightbox img { width: 100%; height: auto; max-height: 68vh; object-fit: contain; display: block; }
+.lightbox .ph { width: 100%; aspect-ratio: 16/9; display: grid; }
 .lightbox figcaption { font-family: "Great Vibes", cursive; font-size: 28px; color: #b66d84; text-align: center; margin-top: 10px; }
 .lightbox-close { position: absolute; top: 16px; right: 18px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255,255,255,.4); background: rgba(255,255,255,.14); color: #fff; font-size: 24px; line-height: 1; cursor: pointer; }
 @keyframes zoom-in { from { transform: scale(.72); opacity: 0; } to { transform: none; opacity: 1; } }
