@@ -4,6 +4,7 @@ import { LockScreen } from "@/components/LockScreen";
 import { FloralLayer } from "@/components/Flowers";
 import { LoveSpiral } from "@/components/LoveSpiral";
 import { LdrMap } from "@/components/LdrMap";
+import { LoveGarden } from "@/components/LoveGarden";
 import { MEMORIES } from "@/lib/memories";
 import { HeartRain, RiseUp } from "@/components/Flowers";
 import loveCss from "../love.css?url";
@@ -57,7 +58,7 @@ export function elapsed(from: Date, to: Date) {
   return { days, hours, minutes, seconds: s - minutes * 60 };
 }
 
-type Screen = "envelope" | "letter" | "lock" | "time" | "story" | "spiral" | "map";
+type Screen = "envelope" | "letter" | "lock" | "time" | "story" | "spiral" | "map" | "garden";
 
 function Typewriter({ text, onDone }: { text: string; onDone: () => void }) {
   const [n, setN] = useState(0);
@@ -255,7 +256,10 @@ function Index() {
       </section>
 
       <section className={`screen ${screen === "map" ? "active" : ""}`} id="s-map" aria-hidden={screen !== "map"}>
-        <LdrMap />
+        <LdrMap onNext={go("garden")} />
+      </section>
+      <section className={`screen ${screen === "garden" ? "active" : ""}`} id="s-garden" aria-hidden={screen !== "garden"}>
+        {screen === "garden" && <LoveGarden onBack={go("map")} />}
       </section>
     </>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { heartScreenY } from "@/lib/heartProjection";
 
 const N = 1400;
 
@@ -54,8 +55,10 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
   const [hearted, setHearted] = useState(false);
 
   useEffect(() => {
-    const c = cv.current!;
-    const ctx = c.getContext("2d")!;
+    const c = cv.current;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
     const hp = heartVolume(N);
     const parts = hp.map((h, i) => {
       // scattered start positions on a sphere shell
@@ -119,7 +122,8 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
       const pulse = mt >= 1 ? 1 + Math.sin(now / 480) * 0.03 : 1;
 
       for (let i = 0; i < N; i++) {
-        const p = parts[i]!;
+        const p = parts[i];
+        if (!p) continue;
         const k = ease(Math.max(0, Math.min(1, (mt - p.delay * 0.5) / 0.7)));
         const x = (p.sx + (p.hx - p.sx) * k) * pulse;
         const y = (p.sy + (p.hy - p.sy) * k) * pulse;
@@ -131,23 +135,24 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
         const sc = 3 / (3 - z2 * 0.85);
         zs[i] = z2;
         pxs[i] = cx + x1 * sc * S;
-        pys[i] = cyc + y2 * sc * S;
+        pys[i] = heartScreenY(cyc, y2, sc * S);
       }
 
       // painter's algorithm: far texts first
-      order.sort((a, b) => zs[a]! - zs[b]!);
+      order.sort((a, b) => (zs[a] ?? 0) - (zs[b] ?? 0));
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       for (const i of order) {
-        const p = parts[i]!;
-        const z2 = zs[i]!;
+        const p = parts[i];
+        if (!p) continue;
+        const z2 = zs[i] ?? 0;
         const sc = 3 / (3 - z2 * 0.85);
         const depth = Math.max(0, Math.min(1, (z2 + 1.05) / 2.1)); // 0 far → 1 near
         ctx.font = `500 ${Math.max(3, p.size * sc * (S / 150))}px "Cormorant Garamond", Georgia, serif`;
         ctx.fillStyle = `rgba(${130 + Math.round(125 * depth)},${50 + Math.round(140 * depth)},${95 + Math.round(115 * depth)},${(0.14 + 0.86 * depth) * p.a})`;
         ctx.shadowColor = "rgba(255,120,170,.8)";
         ctx.shadowBlur = depth > 0.55 ? 7 : 0;
-        ctx.fillText("I love you", pxs[i]!, pys[i]!);
+        ctx.fillText("I love you", pxs[i] ?? 0, pys[i] ?? 0);
       }
       ctx.shadowBlur = 0;
 
@@ -190,12 +195,16 @@ export function LoveSpiral({ onDone }: { onDone: () => void }) {
     const d = s.drag;
     s.drag = null;
     if (!d || d.moved > 8 || s.morph >= 0) return;
-    const rect = cv.current!.getBoundingClientRect();
+    const canvas = cv.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const hit = Math.max(50, Math.min(rect.width, rect.height) * 0.12);
     if (Math.hypot(e.clientX - cx, e.clientY - cy) < hit) {
       s.morph = performance.now();
+      s.velX = 0;
+      s.velY = 0;
       setTimeout(() => setHearted(true), 2600);
     }
   };

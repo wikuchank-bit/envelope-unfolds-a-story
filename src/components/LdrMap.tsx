@@ -1,4 +1,6 @@
-import together from "@/assets/together.jpg";
+import together from "@/assets/together-portrait.jpg.asset.json";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 import { BEKASI, COUNTRIES, KL, MAP_H, MAP_W } from "@/lib/mapPaths";
 
 function Pin({ x, y, label, who, below }: { x: number; y: number; label: string; who: string; below?: boolean }) {
@@ -15,7 +17,7 @@ function Pin({ x, y, label, who, below }: { x: number; y: number; label: string;
   );
 }
 
-export function LdrMap() {
+export function LdrMap({ onNext }: { onNext: () => void }) {
   const mx = (BEKASI.x + KL.x) / 2 + 90, my = (BEKASI.y + KL.y) / 2 - 20;
   const d = `M${KL.x},${KL.y} Q${mx},${my} ${BEKASI.x},${BEKASI.y}`;
   return (
@@ -41,8 +43,9 @@ export function LdrMap() {
       <div className="wish">
         <p className="script">one day, no more miles</p>
         <p className="wish-text">I hope that one day these kilometres simply disappear — no more goodbyes at airports, no more good nights through a screen. Just you and me, in the same place, under the same sky, finally together for good.</p>
-        <img src={together} alt="A cartoon girl and boy running into each other's arms" width={1024} height={768} loading="lazy" className="wish-img" />
+        <img src={together.url} alt="A couple taking a mirror photo together" width={768} height={1024} loading="lazy" className="wish-img" />
       </div>
+      <Button variant="ghost" className="btn-soft show map-next" onClick={onNext}>Next <ArrowRight aria-hidden="true" /></Button>
     </div>
   );
 }

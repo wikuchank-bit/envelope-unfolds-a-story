@@ -62,6 +62,24 @@
 }
 
 :root {
+  --garden-background: oklch(0.97 0.018 355);
+  --garden-paper: oklch(0.995 0.003 355);
+  --garden-ink: oklch(0.38 0.07 355);
+  --garden-soft: oklch(0.82 0.09 355);
+  --garden-pink: oklch(0.66 0.17 355);
+  --garden-deep: oklch(0.51 0.15 355);
+  --garden-petal: oklch(0.9 0.065 355);
+  --garden-leaf: oklch(0.58 0.08 155);
+  --garden-soil: oklch(0.65 0.045 355);
+  --garden-seed: oklch(0.82 0.12 85);
+  --garden-shadow: 0 12px 30px -14px color-mix(in oklch, var(--garden-deep) 35%, transparent);
+  --phone-metal: oklch(0.71 0.018 355);
+  --phone-edge: oklch(0.24 0.012 355);
+  --phone-highlight: oklch(0.94 0.009 355);
+  --phone-glass: oklch(0.12 0.005 355);
+  --phone-text: oklch(0.99 0.004 355);
+  --phone-wall: linear-gradient(155deg, oklch(0.76 0.11 355), oklch(0.51 0.13 350) 60%, oklch(0.32 0.07 350));
+  --phone-shadow: 0 32px 70px -22px color-mix(in oklch, var(--phone-edge) 45%, transparent);
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
