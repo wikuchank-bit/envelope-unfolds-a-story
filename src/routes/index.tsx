@@ -5,6 +5,9 @@ import { FloralLayer } from "@/components/Flowers";
 import { LoveSpiral } from "@/components/LoveSpiral";
 import { LdrMap } from "@/components/LdrMap";
 import { LoveGarden } from "@/components/LoveGarden";
+import { MemoryBook } from "@/components/MemoryBook";
+import { FireworksSurprise } from "@/components/FireworksSurprise";
+import { LoveLetters } from "@/components/LoveLetters";
 import { MEMORIES } from "@/lib/memories";
 import { HeartRain, RiseUp } from "@/components/Flowers";
 import loveCss from "../love.css?url";
@@ -58,7 +61,7 @@ export function elapsed(from: Date, to: Date) {
   return { days, hours, minutes, seconds: s - minutes * 60 };
 }
 
-type Screen = "envelope" | "letter" | "lock" | "time" | "story" | "spiral" | "map" | "garden";
+type Screen = "envelope" | "letter" | "lock" | "time" | "story" | "spiral" | "map" | "garden" | "book" | "fireworks" | "letters";
 
 function Typewriter({ text, onDone }: { text: string; onDone: () => void }) {
   const [n, setN] = useState(0);
@@ -259,7 +262,16 @@ function Index() {
         <LdrMap onNext={go("garden")} />
       </section>
       <section className={`screen ${screen === "garden" ? "active" : ""}`} id="s-garden" aria-hidden={screen !== "garden"}>
-        {screen === "garden" && <LoveGarden onBack={go("map")} />}
+        {screen === "garden" && <LoveGarden onBack={go("map")} onNext={go("book")} />}
+      </section>
+      <section className={`screen ${screen === "book" ? "active" : ""}`} id="s-book" aria-hidden={screen !== "book"}>
+        {screen === "book" && <MemoryBook onBack={go("garden")} onDone={go("fireworks")} />}
+      </section>
+      <section className={`screen ${screen === "fireworks" ? "active" : ""}`} id="s-fireworks" aria-hidden={screen !== "fireworks"}>
+        {screen === "fireworks" && <FireworksSurprise onDone={go("letters")} />}
+      </section>
+      <section className={`screen ${screen === "letters" ? "active" : ""}`} id="s-letters" aria-hidden={screen !== "letters"}>
+        {screen === "letters" && <LoveLetters onBack={go("fireworks")} />}
       </section>
     </>
   );

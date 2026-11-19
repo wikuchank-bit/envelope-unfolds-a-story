@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Heart, RotateCcw, ArrowLeft } from "lucide-react";
+import { Heart, RotateCcw, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PETAL_COUNT, petalLoves, stageAfterPick, type GardenStage } from "@/lib/loveGarden";
 
@@ -25,7 +25,7 @@ const BRANCHES = [
   "M455 304 Q548 295 633 258",
 ];
 
-export function LoveGarden({ onBack }: { onBack: () => void }) {
+export function LoveGarden({ onBack, onNext }: { onBack: () => void; onNext: () => void }) {
   const [stage, setStage] = useState<GardenStage>("growing");
   const [picked, setPicked] = useState<number[]>([]);
   const [cycle, setCycle] = useState(0);
@@ -92,6 +92,7 @@ export function LoveGarden({ onBack }: { onBack: () => void }) {
       <div className="garden-actions">
         <Button variant="ghost" onClick={onBack} className="garden-back"><ArrowLeft />Back to us</Button>
         {stage === "complete" && <Button variant="ghost" onClick={replay} className="garden-replay"><RotateCcw />Grow it again</Button>}
+        {stage === "complete" && <Button variant="ghost" onClick={onNext} className="romantic-control romantic-primary">Our little story<ArrowRight /></Button>}
       </div>
     </div>
   );

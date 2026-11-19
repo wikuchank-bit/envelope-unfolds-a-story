@@ -62,6 +62,17 @@
 }
 
 :root {
+  --book-paper: oklch(0.98 0.012 85);
+  --book-cover: oklch(0.8 0.075 355);
+  --book-cover-edge: oklch(0.57 0.09 355);
+  --book-page-edge: oklch(0.87 0.022 85);
+  --book-shadow: 0 22px 45px -15px color-mix(in oklch, var(--garden-ink) 30%, transparent);
+  --night-sky: oklch(0.16 0.025 320);
+  --firework-pink: oklch(0.78 0.15 355);
+  --firework-gold: oklch(0.86 0.1 85);
+  --firework-light: oklch(0.97 0.025 355);
+  --firework-glow: 0 0 18px var(--firework-pink), 0 0 55px color-mix(in oklch, var(--firework-pink) 60%, transparent);
+  --letter-overlay: color-mix(in oklch, var(--garden-ink) 65%, transparent);
   --garden-background: oklch(0.97 0.018 355);
   --garden-paper: oklch(0.995 0.003 355);
   --garden-ink: oklch(0.38 0.07 355);

@@ -276,3 +276,114 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 @media (prefers-reduced-motion: reduce) {
   .garden-petal, .garden-word, .garden-tree-heart { animation-delay: 0s !important; }
 }
+
+/* ---- a scrapbook, a surprise, and letters ---- */
+#s-book, #s-letters, #s-fireworks { background: var(--garden-background); }
+.memory-book-wrap, .love-letters-wrap, .fireworks-wrap { width: min(100%, 1080px); padding: 65px 16px 36px; text-align: center; color: var(--garden-ink); }
+.memory-book-wrap .sec-title, .love-letters-wrap .sec-title { font-size: 46px; letter-spacing: 0; }
+.book-stage { position: relative; width: 100%; height: 590px; margin: 22px auto 0; transition: opacity .4s; }
+.book-renderer { position: absolute; inset: 0; }
+.book-sheet { width: 360px; height: 480px; background: var(--book-paper); color: var(--garden-ink); border-radius: 3px; backface-visibility: hidden; box-shadow: var(--book-shadow); }
+.book-sheet-0 { box-shadow: -3px 3px 0 var(--book-page-edge), -6px 6px 0 var(--book-paper), var(--book-shadow); }
+.book-sheet-1 { box-shadow: 3px 3px 0 var(--book-page-edge), 6px 6px 0 var(--book-paper), 9px 9px 0 var(--book-page-edge), var(--book-shadow); }
+.book-sheet-2 { background: var(--book-cover); box-shadow: 4px 5px 0 var(--book-cover-edge), var(--book-shadow); }
+.book-cover { display: flex; flex-direction: column; width: 100%; height: 100%; border: 1px solid var(--book-cover-edge); border-left: 16px solid var(--book-cover-edge); border-radius: 4px; color: var(--garden-ink); background: var(--book-cover); padding: 30px; white-space: normal; font-family: inherit; box-shadow: inset 0 0 0 9px var(--book-cover), inset 0 0 0 10px var(--book-paper); gap: 18px; }
+.book-cover:disabled { opacity: 1; }
+.book-cover:hover { background: var(--book-cover); }
+.book-cover > svg { width: 28px; height: 28px; stroke-width: 1; }
+.book-cover-small { font-size: 16px; font-style: italic; }
+.book-cover-title { font-family: "Great Vibes", cursive; font-size: 64px; line-height: 1.12; }
+.book-cover-names { font-size: 25px; }
+.book-cover-date { font-size: 14px; }
+.book-dedication { position: relative; height: 100%; padding: 42px 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; box-shadow: inset -15px 0 22px -18px var(--garden-soil); }
+.book-dedication > svg { width: 32px; height: 32px; color: var(--garden-pink); stroke-width: 1; }
+.book-dedication > p { font-size: 30px; font-style: italic; }
+.book-dedication > p span { font-family: "Great Vibes", cursive; font-size: 55px; }
+.book-dedication .book-dedication-small { font-size: 19px; line-height: 1.7; }
+.book-ribbon { position: absolute; top: 0; left: 30px; width: 18px; height: 95px; background: var(--book-cover); clip-path: polygon(0 0,100% 0,100% 100%,50% 85%,0 100%); }
+.scrap-page { height: 100%; padding: 24px 23px 20px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; box-shadow: inset 15px 0 22px -18px var(--garden-soil); }
+.scrap-eyebrow { font-family: "Great Vibes", cursive; font-size: 23px; color: var(--garden-deep); }
+.scrap-photos { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 15px; min-height: 0; }
+.scrap-photo { position: relative; display: block; padding: 7px 7px 18px; width: 100%; height: auto; background: var(--garden-paper); border-radius: 0; box-shadow: var(--garden-shadow); transform: rotate(-2deg); cursor: zoom-in; flex-shrink: 1; min-height: 0; }
+.scrap-photo:nth-child(2) { transform: rotate(2.5deg); }
+.scrap-photo:hover { background: var(--garden-paper); }
+.scrap-photo img { display: block; width: 100%; height: auto; max-height: 200px; object-fit: contain; }
+.scrap-pair .scrap-photo { width: 88%; align-self: flex-start; padding-bottom: 12px; }
+.scrap-pair .scrap-photo:nth-child(2) { align-self: flex-end; }
+.scrap-pair .scrap-photo img { max-height: 111px; }
+.scrap-tape { position: absolute; width: 57px; height: 16px; left: 42%; top: -6px; transform: rotate(-8deg); background: color-mix(in oklch, var(--book-cover) 70%, transparent); }
+.scrap-note { font-size: 21px; line-height: 1.42; font-style: italic; }
+.scrap-footer { display: flex; justify-content: space-between; align-items: center; color: var(--garden-deep); font-size: 12px; }
+.scrap-footer svg { width: 17px; height: 17px; stroke-width: 1; }
+.scrap-final { justify-content: center; gap: 28px; }
+.scrap-final .scrap-photos { display: none; }
+.scrap-final-heart { width: 45px; height: 45px; margin: 0 auto; stroke-width: 1; fill: var(--garden-petal); color: var(--garden-deep); }
+.scrap-final .scrap-note { font-size: 25px; line-height: 1.6; }
+.book-controls, .fireworks-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; min-height: 52px; }
+.romantic-control { height: 44px; padding: 0 18px; color: var(--garden-deep); font: 17px "Cormorant Garamond", Georgia, serif; letter-spacing: 0; }
+.romantic-control:hover { background: var(--garden-petal); }
+.romantic-primary { background: var(--garden-petal); box-shadow: var(--garden-shadow); }
+.book-page-count { font-size: 14px; font-variant-numeric: tabular-nums; color: var(--garden-deep); }
+.book-lightbox { position: fixed; inset: 0; z-index: 80; background: var(--letter-overlay); display: grid; place-items: center; padding: 32px; backdrop-filter: blur(8px); animation: fadeIn .35s; }
+.book-lightbox img { max-width: 94vw; max-height: 82svh; width: auto; height: auto; object-fit: contain; border: 8px solid var(--book-paper); box-shadow: var(--book-shadow); }
+.book-lightbox-close { position: absolute; top: 18px; right: 18px; color: var(--book-paper); }
+.fireworks-wrap { padding-top: 70px; }
+.fireworks-wrap > .script { margin-bottom: 25px; }
+.fireworks-scene { position: relative; width: 100%; aspect-ratio: 16/10; max-height: 650px; border: 8px solid var(--book-paper); box-shadow: var(--book-shadow); background: var(--night-sky); overflow: hidden; border-radius: 4px; }
+.fireworks-scene canvas { width: 100%; height: 100%; display: block; }
+.fireworks-love { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; opacity: 0; transform: scale(.8); transition: opacity 1.3s, transform 1.8s; padding: 12px; pointer-events: none; }
+.fireworks-love.revealed { opacity: 1; transform: scale(1); }
+.fireworks-love h2 { color: var(--firework-light); font-size: 76px; font-weight: 500; letter-spacing: 0; text-shadow: var(--firework-glow); }
+.fireworks-love p { color: var(--firework-light); font-size: 22px; font-style: italic; text-shadow: var(--firework-glow); }
+.fireworks-controls { margin-top: 24px; }
+.love-letters-wrap { min-height: 650px; }
+.letters-collection { position: relative; display: flex; justify-content: center; align-items: center; gap: 32px; flex-wrap: wrap; margin: 70px 0 62px; padding-bottom: 54px; }
+.letter-envelope, .future-envelope { position: relative; width: 270px; height: 174px; background: var(--garden-petal); border: 1px solid var(--book-cover); border-radius: 4px; box-shadow: var(--book-shadow); transform: rotate(-3deg); padding: 0; flex: none; }
+.letter-envelope { order: 1; z-index: 2; overflow: visible; }
+.future-envelope-1 { order: 0; width: 220px; height: 142px; transform: rotate(-11deg); background: var(--book-paper); }
+.future-envelope-2 { order: 2; width: 220px; height: 142px; transform: rotate(9deg); }
+.future-envelope { opacity: .65; }
+.letter-envelope:hover { background: var(--garden-petal); transform: rotate(0) translateY(-5px); }
+.letter-envelope-front { position: absolute; inset: 0; background: var(--garden-petal); clip-path: polygon(0 0,50% 54%,100% 0,100% 100%,0 100%); border-radius: 4px; z-index: 2; }
+.letter-envelope-flap { position: absolute; top: 0; left: 0; right: 0; height: 60%; background: var(--book-cover); clip-path: polygon(0 0,100% 0,50% 100%); transform-origin: top; transition: transform .65s; z-index: 3; }
+.letter-envelope-open .letter-envelope-flap { transform: rotateX(180deg); }
+.letter-envelope-paper { position: absolute; inset: 10px; background: var(--book-paper); transition: transform .65s; z-index: 1; }
+.letter-envelope-open .letter-envelope-paper { transform: translateY(-50px); }
+.letter-wax { position: absolute; left: calc(50% - 21px); top: 44%; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--garden-deep); color: var(--garden-petal); box-shadow: var(--garden-shadow); z-index: 4; }
+.letter-wax svg { width: 21px; height: 21px; stroke-width: 1; fill: var(--garden-soft); }
+.letter-envelope-to { position: absolute; left: 18px; bottom: 15px; z-index: 4; font: 24px "Great Vibes", cursive; color: var(--garden-deep); }
+.letter-envelope .letter-envelope-flower { position: absolute; right: 16px; bottom: 17px; z-index: 4; width: 26px; height: 26px; color: var(--garden-deep); stroke-width: 1; }
+.letter-envelope-title { position: absolute; top: calc(100% + 26px); left: -8px; right: -8px; white-space: normal; font: 22px/1.3 "Cormorant Garamond", Georgia, serif; color: var(--garden-ink); }
+.letter-modal { position: fixed; inset: 0; z-index: 70; overflow-y: auto; background: var(--letter-overlay); backdrop-filter: blur(7px); padding: 60px 18px 30px; display: flex; align-items: flex-start; justify-content: center; animation: fadeIn .7s both; }
+.personal-letter { position: relative; background: var(--book-paper); width: min(100%, 660px); padding: 44px 46px 36px; color: var(--garden-ink); text-align: left; border-radius: 4px; box-shadow: var(--book-shadow); animation: letter-unfold 1s .25s both; }
+.personal-letter::before { content: ""; position: absolute; inset: 12px; border: 1px solid var(--book-cover); pointer-events: none; }
+.personal-letter-close { position: absolute; right: 16px; top: 16px; color: var(--garden-deep); z-index: 2; }
+.personal-letter-flower { width: 28px; height: 28px; color: var(--garden-pink); stroke-width: 1; margin-bottom: 18px; }
+.personal-letter-to { font-family: "Great Vibes", cursive; font-size: 34px; margin-bottom: 14px; color: var(--garden-deep); }
+.personal-letter h3 { font-weight: 500; font-size: 24px; line-height: 1.3; margin-bottom: 24px; }
+.personal-letter-text { font-size: 20px; line-height: 1.7; }
+.personal-letter-text p + p { margin-top: 20px; }
+.personal-letter-sign { margin-top: 28px; display: flex; justify-content: flex-end; align-items: center; gap: 16px; font: 26px/1.3 "Great Vibes", cursive; color: var(--garden-deep); }
+.personal-letter-sign svg { width: 20px; height: 20px; stroke-width: 1; }
+.letter-modal-closing { animation: letter-fade-out .45s forwards; }
+.letter-modal-closing .personal-letter { animation: letter-fold .45s forwards; }
+@keyframes letter-unfold { from { opacity: 0; transform: translateY(85px) rotateX(-18deg) scale(.86); } to { opacity: 1; transform: none; } }
+@keyframes letter-fold { to { opacity: 0; transform: translateY(60px) scale(.9); } }
+@keyframes letter-fade-out { to { opacity: 0; } }
+@media (max-width: 600px) {
+  .memory-book-wrap, .love-letters-wrap, .fireworks-wrap { padding: 70px 12px 30px; }
+  .memory-book-wrap .sec-title, .love-letters-wrap .sec-title { font-size: 36px; }
+  .book-stage { height: 520px; margin-top: 12px; }
+  .book-controls { gap: 6px; }
+  .romantic-control { padding: 0 12px; }
+  .fireworks-scene { aspect-ratio: 4/5; border-width: 5px; }
+  .fireworks-love h2 { font-size: 40px; }
+  .fireworks-love p { font-size: 19px; max-width: 240px; }
+  .letters-collection { gap: 0; margin: 74px 0 90px; }
+  .future-envelope { position: absolute; width: 225px; height: 146px; top: -20px; }
+  .future-envelope-1 { transform: translate(-30px, 0) rotate(-12deg); }
+  .future-envelope-2 { transform: translate(27px, 0) rotate(10deg); }
+  .personal-letter { padding: 45px 27px 32px; }
+  .personal-letter-text { font-size: 19px; line-height: 1.65; }
+  .personal-letter h3 { font-size: 23px; }
+}
