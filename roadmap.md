@@ -9,3 +9,7 @@
 - [x] Close the book smoothly into three fireworks and the final love reveal.
 - [x] Add an envelope collection with the supplied featured letter and room for future letters.
 - [x] Verify the connected journey, navigation, and readable layouts on desktop and mobile.
+
+# Latest uploaded memories
+- [x] Add the two new photos without duplicating the six reuploaded photos or removing existing memories.
+- [x] Verify photo enlargement and the connected book, fireworks, and letter flow on desktop and mobile.

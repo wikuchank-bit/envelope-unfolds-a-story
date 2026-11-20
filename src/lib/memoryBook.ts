@@ -7,12 +7,14 @@ import p6 from "@/assets/book-memory-6.jpg.asset.json";
 import p7 from "@/assets/book-memory-7.jpg.asset.json";
 import p8 from "@/assets/book-memory-8.jpg.asset.json";
 import p9 from "@/assets/book-memory-9.jpg.asset.json";
+import p10 from "@/assets/book-memory-10.jpg.asset.json";
+import p11 from "@/assets/book-memory-11.png.asset.json";
 
 export const BOOK_PAGES = [
-  { note: "A little collection of moments that mean everything to me.", photos: [p1.url] },
+  { note: "A little collection of moments that mean everything to me.", photos: [p1.url, p10.url] },
   { note: "Even the simplest moments become special when I'm with you.", photos: [p2.url, p3.url] },
   { note: "From playing games together to making memories, every little moment with you is worth keeping.", photos: [p4.url, p5.url] },
-  { note: "I wish we could turn every moment together into a memory we could hold forever.", photos: [p6.url] },
+  { note: "I wish we could turn every moment together into a memory we could hold forever.", photos: [p6.url, p11.url] },
   { note: "Distance may keep us apart, but these little moments always bring me closer to you.", photos: [p7.url] },
   { note: "If I could relive one thing, it would be all these little moments with you.", photos: [p8.url, p9.url] },
   { note: "These are just little pieces of our story, but every single one of them means so much to me. And I hope we get to fill many more pages together.", photos: [] },

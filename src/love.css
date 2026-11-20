@@ -327,6 +327,7 @@ body { background: #fbeef0; font-family: "Cormorant Garamond", Georgia, serif; c
 .book-lightbox { position: fixed; inset: 0; z-index: 80; background: var(--letter-overlay); display: grid; place-items: center; padding: 32px; backdrop-filter: blur(8px); animation: fadeIn .35s; }
 .book-lightbox img { max-width: 94vw; max-height: 82svh; width: auto; height: auto; object-fit: contain; border: 8px solid var(--book-paper); box-shadow: var(--book-shadow); }
 .book-lightbox-close { position: absolute; top: 18px; right: 18px; color: var(--book-paper); }
+body:has(.book-lightbox, .letter-modal) .music { z-index: 1; }
 .fireworks-wrap { padding-top: 70px; }
 .fireworks-wrap > .script { margin-bottom: 25px; }
 .fireworks-scene { position: relative; width: 100%; aspect-ratio: 16/10; max-height: 650px; border: 8px solid var(--book-paper); box-shadow: var(--book-shadow); background: var(--night-sky); overflow: hidden; border-radius: 4px; }

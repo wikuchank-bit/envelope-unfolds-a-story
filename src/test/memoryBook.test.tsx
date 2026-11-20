@@ -2,11 +2,13 @@ import { describe, expect, it } from "vitest";
 import { BOOK_PAGES, FIREWORK_TIMES, fireworksAt } from "@/lib/memoryBook";
 
 describe("connected scrapbook surprise", () => {
-  it("keeps all nine newly uploaded photos exactly once in the book", () => {
+  it("keeps the nine existing and two new photos exactly once in the book", () => {
     const photos = BOOK_PAGES.flatMap((p) => p.photos);
-    expect(photos).toHaveLength(9);
-    expect(new Set(photos).size).toBe(9);
-    expect(photos.filter((p) => p.includes("book-memory-"))).toHaveLength(9);
+    expect(photos).toHaveLength(11);
+    expect(new Set(photos).size).toBe(11);
+    expect(photos.filter((p) => p.includes("book-memory-"))).toHaveLength(11);
+    expect(photos.filter((p) => p.endsWith("book-memory-10.jpg"))).toHaveLength(1);
+    expect(photos.filter((p) => p.endsWith("book-memory-11.png"))).toHaveLength(1);
   });
   it("plays exactly three separate explosions in order", () => {
     expect(FIREWORK_TIMES).toEqual([1200, 4200, 7400]);
